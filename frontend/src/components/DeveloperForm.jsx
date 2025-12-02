@@ -31,7 +31,7 @@ export default function DeveloperForm({ onAdded, showToast }) {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch("http://localhost:4000/developers", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/developers`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

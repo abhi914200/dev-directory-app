@@ -14,7 +14,11 @@ const app =express();
 const PORT=process.env.PORT || 4000;
 
 //middleware
-app.use(cors());
+const ALLOWED_ORIGIN = process.env.CORS_ORIGIN || "*";
+app.use(cors({
+  origin: ALLOWED_ORIGIN
+}));
+
 app.use(express.json());
 
 
