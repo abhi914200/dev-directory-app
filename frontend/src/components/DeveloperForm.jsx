@@ -1,7 +1,7 @@
 // src/components/DeveloperForm.jsx
 import { useState } from "react";
 
-const ROLES = ["Frontend", "Backend", "Full-Stack"];
+const ROLES = ["Frontend", "Backend", "Full-Stack","Data Analyst" ,"Devops"];
 
 export default function DeveloperForm({ onAdded, showToast }) {
   const [name, setName] = useState("");
