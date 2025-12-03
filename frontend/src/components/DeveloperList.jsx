@@ -113,6 +113,8 @@ const [editingMap, setEditingMap] = useState({}); // optional: store temp update
           <option value="Frontend">Frontend</option>
           <option value="Backend">Backend</option>
           <option value="Full-Stack">Full-Stack</option>
+          <option value="Data Analyst">Data Analyst</option>
+          <option value="DevOps">DevOps</option>
         </select>
 
         <input

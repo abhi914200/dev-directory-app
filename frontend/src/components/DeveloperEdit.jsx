@@ -8,7 +8,7 @@ export default function DeveloperEdit({ dev, onCancel, onSaved, showToast }) {
   const [experience, setExperience] = useState(String(dev.experience ?? ""));
   const [isSaving, setIsSaving] = useState(false);
 
-  const ROLES = ["Frontend", "Backend", "Full-Stack"];
+  const ROLES = ["Frontend", "Backend", "Full-Stack","Data Analyst" ,"Devops"];
 
   async function handleSave(e) {
     e.preventDefault();
