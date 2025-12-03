@@ -1,5 +1,5 @@
 # 👨‍💻 Developer Directory App
-Live Demo--
+Live Demo- https://dev-directory-app.vercel.app/
 
 ---
 
