@@ -36,7 +36,7 @@ function validateDeveloperPayload(payload) {
   if (!payload.name || typeof payload.name !== "string" || !payload.name.trim()) {
     errors.push("name is required");
   }
-  const validRoles = ["Frontend", "Backend", "Full-Stack"];
+  const validRoles = ["Frontend", "Backend", "Full-Stack","Data Analyst" ,"Devops"];
   if (!payload.role || !validRoles.includes(payload.role)) {
     errors.push(`role is required and must be one of: ${validRoles.join(", ")}`);
   }
