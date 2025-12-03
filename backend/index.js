@@ -1,136 +1,141 @@
-import express from 'express';
-import cors from 'cors';
-import { promises as fs } from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
+// backend/index.js (ESM) — MongoDB + CRUD
+import express from "express";
+import cors from "cors";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import Developer from "./models/Developer.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+dotenv.config();
 
-const DATA_FILE = path.join(__dirname, "data.json");
-
-const app =express();
-
-const PORT=process.env.PORT || 4000;
-
-//middleware
+const app = express();
+const PORT = process.env.PORT || 4000;
 const ALLOWED_ORIGIN = process.env.CORS_ORIGIN || "*";
-app.use(cors({
-  origin: ALLOWED_ORIGIN
-}));
 
+app.use(cors({ origin: ALLOWED_ORIGIN }));
 app.use(express.json());
 
-
-//simple helper functions to read and write data
-async function readData() {
-    try{
-
-        const raw = await fs.readFile(DATA_FILE,'utf-8');
-        return JSON.parse(raw);
-
-    }
-    catch (err) {
-        
-        return [];
-    }
-    
-}
-async function writeData(data) {
-    await fs.writeFile(DATA_FILE, JSON.stringify(data, null, 2), 'utf-8');
+// Connect to MongoDB
+const MONGODB_URI = process.env.MONGODB_URI;
+if (MONGODB_URI) {
+  mongoose.connect(MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }).then(() => {
+    console.log("Connected to MongoDB");
+  }).catch((err) => {
+    console.error("MongoDB connection error:", err);
+  });
+} else {
+  console.warn("MONGODB_URI not provided — backend will not persist data to MongoDB.");
 }
 
-async function ensureDataFile() {
-    try {
-        await fs.access(DATA_FILE);
-        
-    } catch (err) {
-        await writeData([]);
-    }
-}
-
-//simple validation function 
-function validateDeveloper(payload) {
-    const errors=[];
-    if(!payload.name || typeof payload.name !=='string'|| payload.name.trim()===""){
-        errors.push("name is required and should be a non-empty string.");
-    }
-    const validRoles = ["Frontend", "Backend", "Full-Stack"];
+// --- Validation helper (server-side) ---
+function validateDeveloperPayload(payload) {
+  const errors = [];
+  if (!payload.name || typeof payload.name !== "string" || !payload.name.trim()) {
+    errors.push("name is required");
+  }
+  const validRoles = ["Frontend", "Backend", "Full-Stack"];
   if (!payload.role || !validRoles.includes(payload.role)) {
     errors.push(`role is required and must be one of: ${validRoles.join(", ")}`);
   }
-
-  if (!payload.techStack || typeof payload.techStack !== "string" || payload.techStack.trim() === "") {
-    errors.push("techStack is required (comma-separated string)");
-  }
-
+  if (!payload.techStack || (typeof payload.techStack !== "string" && !Array.isArray(payload.techStack))) {
+    errors.push("techStack is required (string or array)");  }
   if (payload.experience === undefined || payload.experience === null || isNaN(Number(payload.experience))) {
-    errors.push("experience is required and must be a number (years)");
+    errors.push("experience is required and must be a number");
   } else if (Number(payload.experience) < 0) {
     errors.push("experience must be 0 or greater");
   }
-
   return errors;
 }
-    
 
+// Routes
 
-//routes
-app.get('/', (req, res) => {
-  res.send({ status: 'ok', message: 'Backend (ESM) running' });
-});
+app.get("/", (req, res) => res.json({ status: "ok", message: "Backend (Mongo) running" }));
 
-app.get('/developers', async(req,res)=>{
-    try{
-        const list =await readData();
-        res.json(list);
-    }
-    catch(err){
-        res.status(500).json({error:"Failed to read data"});
-    }
-});
-
-app.post('/developers', async (req, res) => {
+// GET /developers
+app.get("/developers", async (req, res) => {
   try {
-    const payload = req.body;
-
-    // validate (make sure this function is defined as validateDeveloper)
-    const errors = validateDeveloper(payload);
-    if (errors.length > 0) {
-      return res.status(400).json({ errors });
-    }
-
-    // normalize tech stack: split by comma, trim, remove empty
-    const techArray = payload.techStack
-      .split(',')
-      .map(s => s.trim())
-      .filter(Boolean);
-
-    // create developer object
-    const developer = {
-      id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
-      name: payload.name.trim(),
-      role: payload.role,
-      techStack: techArray,
-      experience: Number(payload.experience),
-      createdAt: new Date().toISOString()
-    };
-
-    // ensure file exists, read, push, write
-    await ensureDataFile();
-    const data = await readData();
-    data.push(developer);
-    await writeData(data);
-
-    res.status(201).json({ message: 'Developer saved', developer });
+    const docs = await Developer.find().sort({ createdAt: -1 }).lean();
+    res.json(docs);
   } catch (err) {
-    console.error('POST /developers error:', err);
-    res.status(500).json({ error: 'Failed to save developer' });
+    console.error("GET /developers error:", err);
+    res.status(500).json({ error: "Failed to fetch developers" });
   }
 });
 
+// POST /developers
+app.post("/developers", async (req, res) => {
+  try {
+    const payload = req.body;
+    const errors = validateDeveloperPayload(payload);
+    if (errors.length) return res.status(400).json({ errors });
 
+    // normalize techStack: allow array or comma-separated string
+    const techArray = Array.isArray(payload.techStack)
+      ? payload.techStack.map(s => String(s).trim()).filter(Boolean)
+      : String(payload.techStack).split(",").map(s => s.trim()).filter(Boolean);
 
+    const dev = new Developer({
+      name: payload.name.trim(),
+      role: payload.role,
+      techStack: techArray,
+      experience: Number(payload.experience)
+    });
+
+    await dev.save();
+    res.status(201).json({ message: "Developer saved", developer: dev });
+  } catch (err) {
+    console.error("POST /developers error:", err);
+    res.status(500).json({ error: "Failed to save developer" });
+  }
+});
+
+// PUT /developers/:id  -> Edit developer
+app.put("/developers/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const payload = req.body;
+    const errors = validateDeveloperPayload(payload);
+    if (errors.length) return res.status(400).json({ errors });
+
+    const techArray = Array.isArray(payload.techStack)
+      ? payload.techStack.map(s => String(s).trim()).filter(Boolean)
+      : String(payload.techStack).split(",").map(s => s.trim()).filter(Boolean);
+
+    const updated = await Developer.findByIdAndUpdate(
+      id,
+      {
+        name: payload.name.trim(),
+        role: payload.role,
+        techStack: techArray,
+        experience: Number(payload.experience)
+      },
+      { new: true, runValidators: true }
+    );
+
+    if (!updated) return res.status(404).json({ error: "Developer not found" });
+    res.json({ message: "Developer updated", developer: updated });
+  } catch (err) {
+    console.error("PUT /developers/:id error:", err);
+    res.status(500).json({ error: "Failed to update developer" });
+  }
+});
+
+// DELETE /developers/:id
+app.delete("/developers/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const removed = await Developer.findByIdAndDelete(id);
+    if (!removed) return res.status(404).json({ error: "Developer not found" });
+    res.json({ message: "Developer deleted", developer: removed });
+  } catch (err) {
+    console.error("DELETE /developers/:id error:", err);
+    res.status(500).json({ error: "Failed to delete developer" });
+  }
+});
+
+// Start server
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server running (Mongo) at http://localhost:${PORT}`);
 });

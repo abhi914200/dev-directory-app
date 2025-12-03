@@ -22,5 +22,65 @@
     ],
     "experience": 2,
     "createdAt": "2025-12-02T20:51:15.830Z"
+  },
+  {
+    "id": "1764745540217-5290",
+    "name": "Abhimanyu Raj",
+    "role": "Backend",
+    "techStack": [
+      "React"
+    ],
+    "experience": 1.5,
+    "createdAt": "2025-12-03T07:05:40.217Z"
+  },
+  {
+    "id": "1764745582683-1677",
+    "name": "Abhi",
+    "role": "Full-Stack",
+    "techStack": [
+      "MongoDB"
+    ],
+    "experience": 4,
+    "createdAt": "2025-12-03T07:06:22.683Z"
+  },
+  {
+    "id": "1764745627852-1153",
+    "name": "Sam",
+    "role": "Backend",
+    "techStack": [
+      "Data Analyst"
+    ],
+    "experience": 4,
+    "createdAt": "2025-12-03T07:07:07.852Z"
+  },
+  {
+    "id": "1764745700976-2950",
+    "name": "Abhishek",
+    "role": "Frontend",
+    "techStack": [
+      "mongo"
+    ],
+    "experience": 7,
+    "createdAt": "2025-12-03T07:08:20.976Z"
+  },
+  {
+    "id": "1764745712106-1508",
+    "name": "rohit",
+    "role": "Frontend",
+    "techStack": [
+      "node"
+    ],
+    "experience": 3,
+    "createdAt": "2025-12-03T07:08:32.106Z"
+  },
+  {
+    "id": "1764749305146-767",
+    "name": "New dev",
+    "role": "Frontend",
+    "techStack": [
+      "Node"
+    ],
+    "experience": 8,
+    "createdAt": "2025-12-03T08:08:25.146Z"
   }
 ]
