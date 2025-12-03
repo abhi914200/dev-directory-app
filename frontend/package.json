@@ -10,9 +10,8 @@
     "preview": "vite preview"
   },
   "engines": {
-  "node": "18.x"
-},
-
+    "node": "18.x"
+  },
   "dependencies": {
     "-": "^0.0.1",
     "@tailwindcss/vite": "^4.1.17",

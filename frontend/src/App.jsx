@@ -18,17 +18,19 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 p-6">
-      <div className="max-w-4xl mx-auto">
+    <div className=" min-h-screen bg-amber-200 p-6 ">
+      <div className="max-w-4xl mx-auto ">
         <h1 className="text-2xl font-bold mb-4">Developer Directory</h1>
 
-        <div className="grid gap-6 md:grid-cols-2 grid-cols-1">
+        <div className=" mb-5 grid gap-6  grid-cols-1">
           <DeveloperForm onAdded={onAdded} showToast={showToast} />
-          <div className="border rounded p-4">
-            <h2 className="font-semibold mb-2">Developers</h2>
-            <DeveloperList trigger={trigger} />
-          </div>
+          
         </div>
+        <div className="border rounded p-4 bg-slate-50">
+            <h2 className="font-semibold mb-2">Developers</h2>
+            <DeveloperList trigger={trigger} showToast={showToast} />
+
+          </div>
       </div>
 
       <Toast

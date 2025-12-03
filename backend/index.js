@@ -5,6 +5,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import Developer from "./models/Developer.js";
 
+
+
 dotenv.config();
 
 const app = express();
@@ -17,16 +19,15 @@ app.use(express.json());
 // Connect to MongoDB
 const MONGODB_URI = process.env.MONGODB_URI;
 if (MONGODB_URI) {
-  mongoose.connect(MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }).then(() => {
-    console.log("Connected to MongoDB");
-  }).catch((err) => {
-    console.error("MongoDB connection error:", err);
-  });
+  mongoose.connect(MONGODB_URI)
+    .then(() => {
+      console.log("✓ Connected to MongoDB");
+    })
+    .catch((err) => {
+      console.error("✗ MongoDB connection error:", err.message);
+    });
 } else {
-  console.warn("MONGODB_URI not provided — backend will not persist data to MongoDB.");
+  console.warn("⚠ MONGODB_URI not provided — backend will not persist data to MongoDB.");
 }
 
 // --- Validation helper (server-side) ---
