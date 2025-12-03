@@ -77,8 +77,8 @@ developer-directory/
 3. **Create `.env` file**
    ```env
    MONGODB_URI=your_mongodb_atlas_connection_string
-   CORS_ORIGIN=http://localhost:5173
-   PORT=4000
+   CORS_ORIGIN=http://.."
+   PORT=...
    ```
 
 4. **Start the server**
