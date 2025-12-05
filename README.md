@@ -12,6 +12,7 @@ A full-stack MERN directory where developers create profiles, showcase skills, a
 - [Developer Profile CRUD – Sequence Overview](#developer-profile-crud--sequence-overview)
 - [Features](#features)
 - [Project Structure & Screenshots](#project-structure--screenshots)
+- [Screenshots (linked)](#screenshots-linked)
 - [Quick Start](#quick-start)
 - [Environment Variables](#environment-variables)
 - [API Endpoints](#api-endpoints)
@@ -37,52 +38,67 @@ A full-stack MERN directory where developers create profiles, showcase skills, a
 ---
 ## 🔁 Auth Flow – Sequence Overview
 
-```text
+<table>
+  <tr>
+    <td valign="top" width="50%">
+
+**Auth Flow**
+
+<pre>
 User                Frontend (React)           Backend (Express)          Database (MongoDB)
  ───────────────────────────────────────────────────────────────────────────────────────────
-  |  Submit login/signup form  |                         
-  | -------------------------> |  axios.post("/auth")    
+  |  Submit login/signup form  |
+  | -------------------------> |  axios.post("/auth")
   |                            | ----------------------> |  Validate request (Zod)
   |                            |                         |  Check user in DB
   |                            |                         | ----------> [Find/Create User]
   |                            |                         |  Generate JWT token
   |                            | <---------------------- |  { token, user }
-  |        Store token in localStorage                   
+  |        Store token in localStorage
   | <------------------------- |  Navigate to protected route
-  |                            |  axios.get("/developers", { Authorization: Bearer <token> })
+  |                            |  axios.get("/developers", { Authorization: Bearer &lt;token&gt; })
   |                            | ----------------------> |  Verify JWT (middleware)
   |                            |                         |  Fetch developers
   |                            | <---------------------- |  [developers list]
-  |  View protected data       |                         
+  |  View protected data       |
+</pre>
 
+    </td>
+    <td valign="top" width="50%">
 
-## 🧾 Developer Profile CRUD – Sequence Overview
+**Developer Profile CRUD**
 
-```text
+<pre>
 User                   Frontend (React)            Backend (Express)             Database (MongoDB)
 ──────────────────────────────────────────────────────────────────────────────────────────────────
-  |  Open Profile Form     |                                                        
-  | ----------------------> |  axios.get("/developers/:id")                          
+  |  Open Profile Form     |
+  | ----------------------> |  axios.get("/developers/:id")
   |                        | -----------------------------> |  Verify JWT
   |                        |                                 |  Fetch existing profile
   |                        | <----------------------------- |  { profile data }
-  |  Edit & Submit Form    |                                                        
-  | ----------------------> |  axios.put("/developers/:id", body, headers)           
+  |  Edit & Submit Form    |
+  | ----------------------> |  axios.put("/developers/:id", body, headers)
   |                        | -----------------------------> |  Validate (Zod)
   |                        |                                 |  Update profile
   |                        |                                 | -----------> save()
   |                        | <----------------------------- |  { updated profile }
-  |   UI Refresh           |                                                        
-  |                        |  display success toast/banner  
+  |   UI Refresh           |
+  |                        |  display success toast/banner
+</pre>
 
+    </td>
+  </tr>
+</table>
+
+---
 
 ## Features
 
-- 🔐 JWT-based authentication (signup / login)
-- 🧾 Full profile CRUD (create / read / update / delete)
-- 🧰 Tech stack, bio, photo, joining date, experience
-- 🔎 Search, filter, sort, pagination for developer listings
-- ✅ Zod validation middleware to sanitize inputs
+- 🔐 JWT-based authentication (signup / login)  
+- 🧾 Full profile CRUD (create / read / update / delete)  
+- 🧰 Tech stack, bio, photo, joining date, experience  
+- 🔎 Search, filter, sort, pagination for developer listings  
+- ✅ Zod validation middleware to sanitize inputs  
 - 🔁 Persistent login using localStorage + Axios interceptor
 
 ---
@@ -96,17 +112,34 @@ User                   Frontend (React)            Backend (Express)            
   <img src="./screenshots/DeveloperList.png" width="400" alt="Developer list"/>
 </p>
 
+---
 
+## Screenshots (linked)
+
+<!-- simple inline icons + linked thumbnails -->
+[🔒 ![Sign In](/screenshots/Login.png)](https://dev-directory-app1.vercel.app/login)  
+[✍️ ![Sign Up](/screenshots/signUp.png)](https://dev-directory-app1.vercel.app/signup)
+
+<!-- side-by-side, clickable -->
 <table>
   <tr>
-    <td><a href="https://dev-directory-app1.vercel.app/login"><img src="/screenshots/Login.png" alt="Sign In" width="360"></a></td>
-    <td><a href="https://dev-directory-app1.vercel.app/signup"><img src="/screenshots/signUp.png" alt="Sign Up" width="360"></a></td>
+    <td align="center">
+      <a href="https://dev-directory-app1.vercel.app/login">
+        <div>🔒</div>
+        <img src="/screenshots/Login.png" alt="Sign In" width="360"/>
+        <div><strong>Sign In</strong></div>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://dev-directory-app1.vercel.app/signup">
+        <div>✍️</div>
+        <img src="/screenshots/signUp.png" alt="Sign Up" width="360"/>
+        <div><strong>Sign Up</strong></div>
+      </a>
+    </td>
   </tr>
 </table>
 
-<p>
-  <img src="./screenshots/Login.png" width="400" alt="Login page"/>
-</p>
 <p>
   <img src="./screenshots/ProfilePage.png" width="400" alt="Profile page"/>
 </p>
