@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { getDeveloperById } from '../services/developerService';
+import Spinner from '../components/Spinner';
 
 const DeveloperProfilePage = () => {
   const { id } = useParams();
