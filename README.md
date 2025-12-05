@@ -1,72 +1,69 @@
-🚀 Developer Directory App
-
-Hosted Frontend Link:https://dev-directory-app1.vercel.app/
-Hosted Backend API Link:https://dev-directory-app-2.onrender.com
-Hosted Frontend and Backend github Link:https://github.com/abhi914200/dev-directory-app/tree/branch_2
+# 🚀 Developer Directory App
 
 A full-stack MERN platform where developers can create profiles, showcase skills, and browse other developers. Includes secure authentication, profile management, and CRUD operations.
 
-📌 Tech Stack
-Frontend
+---
 
-React (Vite)
+## 🌐 Hosted Links
 
-Axios
+| Service | Link |
+|--------|------|
+| Frontend | https://dev-directory-app1.vercel.app/ |
+| Backend API | https://dev-directory-app-2.onrender.com |
+| Complete Repo | https://github.com/abhi914200/dev-directory-app/tree/branch_2 |
 
-React Router DOM
+---
 
-Tailwind CSS
+## 📌 Tech Stack
 
-Backend
+### **Frontend**
+- React (Vite)
+- Axios
+- React Router DOM
+- Tailwind CSS
 
-Node.js
+### **Backend**
+- Node.js
+- Express.js
+- MongoDB + Mongoose
+- JWT Authentication
+- Zod Validation
 
-Express.js
+### **Deployment**
+- Frontend: Vercel
+- Backend: Render
+- Database: MongoDB Atlas
 
-MongoDB + Mongoose
+---
 
-JWT Authentication
+## ✨ Features
 
-Zod Validation
+| Feature | Description |
+|--------|-------------|
+| 🔐 JWT Authentication | Signup, Login, Protected Routes |
+| 🧾 Profile CRUD | Create, update & delete developer profile |
+| 🧰 Skills Showcase | Add tech skills, bio, social links |
+| 👥 Developer Listing | Explore all registered developers |
+| 🛡️ Validation | Zod-based server validation |
+| 🔗 Token Storage | Persistent login using localStorage |
+| 🗂️ REST APIs | Fully structured backend routes |
 
-Deployment
+---
 
-Frontend: Vercel
+## 📁 Project Structure
 
-Backend: Render
-
-Database: MongoDB Atlas
-
-✨ Features
-Feature	Description
-🔐 JWT Authentication	Signup, Login, Protected Routes
-
-🧾 Profile CRUD	Create, update & delete developer profile
-🧰 Skills Showcase	Add tech skills, bio, social links
-👥 Developer Listing	Explore all registered developers
-🛡️ Validation	Zod-based server validation
-🔗 Token Storage	Persistent login using localStorage
-🗂️ REST APIs	Fully structured backend routes
-📁 Project Structure
-dev-directory-app/
-│
-├── backend/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── middlewares/
-│   ├── utils/
-│   └── server.js
-│
-├── frontend/
-│   ├── src/
-│   │   ├── pages/
-│   │   ├── components/
-│   │   ├── context/
-│   │   └── App.jsx
-│   └── vite.config.js
-│
-└── README.md
+<p>
+  <img src="./screenshots/ProjectStructure.png" width="400"/>
+</p>
+<p>
+  <img src="./screenshots/DevoloperList.png" width="400"/>
+</p>
+<p>
+  <img src="./screenshots/Login.png" width="400"/>
+</p>
+<p>
+  <img src="./screenshots/ProfilePage.png" width="400"/>
+</p>
 
 🚀 Setup Instructions
 1️⃣ Clone the Repository
