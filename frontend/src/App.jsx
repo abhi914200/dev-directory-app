@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import LoginPage from './pages/LoginPage';
-import SignupPage from './pages/SignupPage';
+import SignUpPage from './pages/SignUpPage';
 import DeveloperListPage from './pages/DeveloperListPage';
 import DeveloperProfilePage from './pages/DeveloperProfilePage';
 import DeveloperFormPage from './pages/DeveloperFormPage'; // NEW
@@ -14,7 +14,7 @@ function App() {
         <Routes>
           {/* Public */}
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
 
           {/* Protected */}
           <Route element={<ProtectedRoute />}>
