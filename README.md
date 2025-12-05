@@ -58,6 +58,19 @@ A full-stack MERN platform where developers can create profiles, showcase skills
 <p>
   <img src="./screenshots/DevoloperList.png" width="400"/>
 </p>
+
+## Screenshots (click to open hosted app)
+[![Sign In](/screenshots/signin.png)](https://dev-directory-app1.vercel.app/)
+[![Sign Up](/screenshots/signup.png)](https://dev-directory-app1.vercel.app/)
+
+<!-- Side-by-side, clickable -->
+<table>
+  <tr>
+    <td><a href="https://dev-directory-app1.vercel.app/"><img src="/screenshots/signin.png" alt="Sign In" width="360"></a></td>
+    <td><a href="https://dev-directory-app1.vercel.app/"><img src="/screenshots/signup.png" alt="Sign Up" width="360"></a></td>
+  </tr>
+</table>
+
 <p>
   <img src="./screenshots/Login.png" width="400"/>
 </p>
