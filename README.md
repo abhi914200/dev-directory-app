@@ -1,69 +1,61 @@
 # 🚀 Developer Directory App
 
-A full-stack MERN platform where developers can create profiles, showcase skills, and browse other developers. Includes secure authentication, profile management, and CRUD operations.
+A full-stack MERN directory where developers create profiles, showcase skills, and browse others. Includes JWT auth, profile CRUD, validation, and a searchable listing.
 
 ---
 
-## 🌐 Hosted Links
-
-| Service | Link |
-|--------|------|
-| Frontend | https://dev-directory-app1.vercel.app/ |
-| Backend API | https://dev-directory-app-2.onrender.com |
-| Complete Repo | https://github.com/abhi914200/dev-directory-app/tree/branch_2 |
-
----
-
-## 📌 Tech Stack
-
-### **Frontend**
-- React (Vite)
-- Axios
-- React Router DOM
-- Tailwind CSS
-
-### **Backend**
-- Node.js
-- Express.js
-- MongoDB + Mongoose
-- JWT Authentication
-- Zod Validation
-
-### **Deployment**
-- Frontend: Vercel
-- Backend: Render
-- Database: MongoDB Atlas
+## Table of Contents
+- [Hosted Links](#hosted-links)
+- [Tech Stack](#tech-stack)
+- [Features](#features)
+- [Project Structure & Screenshots](#project-structure--screenshots)
+- [Quick Start](#quick-start)
+- [Environment Variables](#environment-variables)
+- [API Endpoints](#api-endpoints)
+- [Validation & Auth](#validation--auth)
+- [Contributing](#contributing)
+- [Contact](#contact)
+- [License](#license)
 
 ---
 
-## ✨ Features
-
-| Feature | Description |
-|--------|-------------|
-| 🔐 JWT Authentication | Signup, Login, Protected Routes |
-| 🧾 Profile CRUD | Create, update & delete developer profile |
-| 🧰 Skills Showcase | Add tech skills, bio, social links |
-| 👥 Developer Listing | Explore all registered developers |
-| 🛡️ Validation | Zod-based server validation |
-| 🔗 Token Storage | Persistent login using localStorage |
-| 🗂️ REST APIs | Fully structured backend routes |
+## Hosted Links
+- Frontend: https://dev-directory-app1.vercel.app/  
+- Backend API: https://dev-directory-app-2.onrender.com  
+- Repo (branch_2): https://github.com/abhi914200/dev-directory-app/tree/branch_2
 
 ---
 
-## 📁 Project Structure
+## Tech Stack
+- Frontend: React (Vite), Axios, React Router, Tailwind CSS  
+- Backend: Node.js, Express, MongoDB + Mongoose, JWT, Zod (validation)  
+- Deployment: Vercel (frontend), Render (backend), MongoDB Atlas (DB)
+
+---
+
+## Features
+- 🔐 JWT-based authentication (signup / login)
+- 🧾 Full profile CRUD (create / read / update / delete)
+- 🧰 Tech stack, bio, photo, joining date, experience
+- 🔎 Search, filter, sort, pagination for developer listings
+- ✅ Zod validation middleware to sanitize inputs
+- 🔁 Persistent login using localStorage + Axios interceptor
+
+---
+
+## Project Structure & Screenshots
 
 <p>
-  <img src="./screenshots/ProjectStructure.png" width="400"/>
+  <img src="./screenshots/ProjectStructure.png" width="400" alt="Project structure"/>
 </p>
 <p>
-  <img src="./screenshots/DevoloperList.png" width="400"/>
+  <img src="./screenshots/DevoloperList.png" width="400" alt="Developer list"/>
 </p>
 
 ## Screenshots (click to open hosted app)
 [![Sign In](/screenshots/signin.png)](https://dev-directory-app1.vercel.app/)
 [![Sign Up](/screenshots/signup.png)](https://dev-directory-app1.vercel.app/)
 
-<!-- Side-by-side, clickable -->
 <table>
   <tr>
     <td><a href="https://dev-directory-app1.vercel.app/"><img src="/screenshots/signin.png" alt="Sign In" width="360"></a></td>
@@ -72,76 +64,90 @@ A full-stack MERN platform where developers can create profiles, showcase skills
 </table>
 
 <p>
-  <img src="./screenshots/Login.png" width="400"/>
+  <img src="./screenshots/Login.png" width="400" alt="Login page"/>
 </p>
 <p>
-  <img src="./screenshots/ProfilePage.png" width="400"/>
+  <img src="./screenshots/ProfilePage.png" width="400" alt="Profile page"/>
 </p>
 
-🚀 Setup Instructions
-1️⃣ Clone the Repository
+---
+
+## Quick Start
+
+Clone and run locally:
+
+```powershell
 git clone https://github.com/abhi914200/dev-directory-app
 cd dev-directory-app
 
-2️⃣ Environment Variables
-Backend (.env)
-PORT=4000
-MONGO_URI=your_mongo_db_connection
-JWT_SECRET=your_secret_key
-CLIENT_URL=http://localhost:5173
-
-Frontend (.env)
-VITE_API_BASE_URL=http://localhost:4000/api
-
-▶️ Running the App Locally
-Backend
+# Backend
 cd backend
 npm install
 npm run dev
 
-Frontend
-cd frontend
+# Frontend (new terminal)
+cd ../frontend
 npm install
 npm run dev
+```
 
-🔐 Authentication Flow
+---
 
-On login/signup → JWT is generated & stored in localStorage
+## Environment Variables
 
-Axios interceptor attaches token on each request:
+Backend (.env)
+```
+PORT=4000
+MONGO_URI=your_mongo_db_connection
+JWT_SECRET=your_secret_key
+CLIENT_URL=http://localhost:5173
+```
 
-Authorization: Bearer <token>
+Frontend (.env)
+```
+VITE_API_BASE_URL=http://localhost:4000/api
+```
 
-📡 API Endpoints
-Auth Routes
-Method	Endpoint	Description
-POST	/api/auth/signup	Register new developer
-POST	/api/auth/login	Login & get token
-Developer Routes
-Method	Endpoint	Description
-GET	/api/developers	Get all developers
-GET	/api/developers/:id	Get developer by ID
-POST	/api/developers/Create profile
-PUT	/api/developers/:id	Update profile
-DELETE	/api/developers/:id	Delete profile
-🧪 Validation
+---
 
-Zod validation middleware ensures clean & safe input:
+## API Endpoints
 
-validateRequest(schema)
+Auth
+- POST /api/auth/signup — register
+- POST /api/auth/login — login, returns JWT
 
+Developers (protected)
+- GET /api/developers — list (supports search/role/sort/page/limit)
+- GET /api/developers/:id — get by id
+- POST /api/developers — create profile
+- PUT /api/developers/:id — update profile
+- DELETE /api/developers/:id — delete profile
 
-📌 Future Enhancements
+Notes:
+- Protected endpoints require header: Authorization: Bearer <token>
 
-📸 Cloudinary image upload
+---
 
-⭐ Skill rating & endorsements
+## Validation & Auth
+- Zod schemas validate body/query/params via validateRequest middleware.
+- Auth middleware checks JWT and attaches user to req.user.
+- If you run into "jwt malformed" ensure the client sends the header exactly:
+  Authorization: Bearer <token>
 
-📨 Contact developer messaging
+---
 
-📧 Contact
+## Contributing
+Contributions welcome. Please:
+1. Fork the repo
+2. Create a feature branch
+3. Open a PR with a clear description
+
+---
+
+## Contact
 - Email: [abhimanyu.12g@gmail.com](mailto:abhimanyu.12g@gmail.com)
-If you have any improvements, feel free to submit a PR!
 
-Developer: Abhimanyu Raj
-Project: Developer Directory App
+---
+
+## License
+MIT — see LICENSE file for details.
