@@ -49,17 +49,17 @@ A full-stack MERN directory where developers create profiles, showcase skills, a
   <img src="./screenshots/ProjectStructure.png" width="400" alt="Project structure"/>
 </p>
 <p>
-  <img src="./screenshots/DevoloperList.png" width="400" alt="Developer list"/>
+  <img src="./screenshots/DeveloperList.png" width="400" alt="Developer list"/>
 </p>
 
 ## Screenshots (click to open hosted app)
-[![Sign In](/screenshots/signin.png)](https://dev-directory-app1.vercel.app/)
-[![Sign Up](/screenshots/signup.png)](https://dev-directory-app1.vercel.app/)
+[![Sign In](/screenshots/Login.png)](https://dev-directory-app1.vercel.app/)
+[![Sign Up](/screenshots/sigUp.png)](https://dev-directory-app1.vercel.app/)
 
 <table>
   <tr>
-    <td><a href="https://dev-directory-app1.vercel.app/"><img src="/screenshots/signin.png" alt="Sign In" width="360"></a></td>
-    <td><a href="https://dev-directory-app1.vercel.app/"><img src="/screenshots/signup.png" alt="Sign Up" width="360"></a></td>
+    <td><a href="https://dev-directory-app1.vercel.app/login"><img src="/screenshots/Login.png" alt="Sign In" width="360"></a></td>
+    <td><a href="https://dev-directory-app1.vercel.app/signup"><img src="/screenshots/signUp.png" alt="Sign Up" width="360"></a></td>
   </tr>
 </table>
 
