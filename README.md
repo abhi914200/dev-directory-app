@@ -4,9 +4,12 @@ A full-stack MERN directory where developers create profiles, showcase skills, a
 
 ---
 
+
 ## Table of Contents
 - [Hosted Links](#hosted-links)
 - [Tech Stack](#tech-stack)
+- [Auth Flow – Sequence Overview](#auth-flow--sequence-overview)
+- [Developer Profile CRUD – Sequence Overview](#developer-profile-crud--sequence-overview)
 - [Features](#features)
 - [Project Structure & Screenshots](#project-structure--screenshots)
 - [Quick Start](#quick-start)
@@ -32,8 +35,49 @@ A full-stack MERN directory where developers create profiles, showcase skills, a
 - Deployment: Vercel (frontend), Render (backend), MongoDB Atlas (DB)
 
 ---
+## 🔁 Auth Flow – Sequence Overview
+
+```text
+User                Frontend (React)           Backend (Express)          Database (MongoDB)
+ ───────────────────────────────────────────────────────────────────────────────────────────
+  |  Submit login/signup form  |                         
+  | -------------------------> |  axios.post("/auth")    
+  |                            | ----------------------> |  Validate request (Zod)
+  |                            |                         |  Check user in DB
+  |                            |                         | ----------> [Find/Create User]
+  |                            |                         |  Generate JWT token
+  |                            | <---------------------- |  { token, user }
+  |        Store token in localStorage                   
+  | <------------------------- |  Navigate to protected route
+  |                            |  axios.get("/developers", { Authorization: Bearer <token> })
+  |                            | ----------------------> |  Verify JWT (middleware)
+  |                            |                         |  Fetch developers
+  |                            | <---------------------- |  [developers list]
+  |  View protected data       |                         
+
+
+## 🧾 Developer Profile CRUD – Sequence Overview
+
+```text
+User                   Frontend (React)            Backend (Express)             Database (MongoDB)
+──────────────────────────────────────────────────────────────────────────────────────────────────
+  |  Open Profile Form     |                                                        
+  | ----------------------> |  axios.get("/developers/:id")                          
+  |                        | -----------------------------> |  Verify JWT
+  |                        |                                 |  Fetch existing profile
+  |                        | <----------------------------- |  { profile data }
+  |  Edit & Submit Form    |                                                        
+  | ----------------------> |  axios.put("/developers/:id", body, headers)           
+  |                        | -----------------------------> |  Validate (Zod)
+  |                        |                                 |  Update profile
+  |                        |                                 | -----------> save()
+  |                        | <----------------------------- |  { updated profile }
+  |   UI Refresh           |                                                        
+  |                        |  display success toast/banner  
+
 
 ## Features
+
 - 🔐 JWT-based authentication (signup / login)
 - 🧾 Full profile CRUD (create / read / update / delete)
 - 🧰 Tech stack, bio, photo, joining date, experience
