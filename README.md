@@ -52,9 +52,6 @@ A full-stack MERN directory where developers create profiles, showcase skills, a
   <img src="./screenshots/DeveloperList.png" width="400" alt="Developer list"/>
 </p>
 
-## Screenshots (click to open hosted app)
-[![Sign In](/screenshots/Login.png)](https://dev-directory-app1.vercel.app/)
-[![Sign Up](/screenshots/sigUp.png)](https://dev-directory-app1.vercel.app/)
 
 <table>
   <tr>
@@ -150,4 +147,4 @@ Contributions welcome. Please:
 ---
 
 ## License
-MIT — see LICENSE file for details.
+This project is licensed under the MIT License - feel free to use it for learning and personal projects.
