@@ -1,5 +1,9 @@
 // src/components/DeveloperForm.jsx
 import { useState } from "react";
+import toast from 'react-hot-toast';
+
+
+
 
 const ROLES = ["Frontend", "Backend", "Full-Stack","Data Analyst" ,"Devops"];
 
@@ -21,44 +25,38 @@ export default function DeveloperForm({ onAdded, showToast }) {
     return errs;
   }
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    const validation = validate();
-    setErrors(validation);
-    if (Object.keys(validation).length) return;
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setSaving(true);
+  setErrors('');
 
-    const payload = { name, role, techStack, experience: Number(experience) };
-    setIsSubmitting(true);
+  const payload = {
+    ...form,
+    experience: Number(form.experience)
+  };
 
-    try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/developers`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      const body = await res.json();
-      if (!res.ok) {
-        const msg = body?.errors?.join?.(", ") || body?.error || "Failed to save";
-        showToast(msg, "error");
-        setIsSubmitting(false);
-        return;
-      }
-
-      showToast("Developer added", "success");
-      setName("");
-      setRole(ROLES[0]);
-      setTechStack("");
-      setExperience("");
-      setErrors({});
-      onAdded && onAdded(body.developer);
-    } catch (err) {
-      console.error(err);
-      showToast("Network error", "error");
-    } finally {
-      setIsSubmitting(false);
+  try {
+    if (isEdit) {
+      await updateDeveloper(id, payload);
+      toast.success('Developer updated successfully');
+    } else {
+      await createDeveloper(payload);
+      toast.success('Developer created successfully');
     }
+
+    navigate('/developers');
+  } catch (err) {
+    console.error(err);
+    const msg =
+      err?.response?.data?.message ||
+      `Failed to ${isEdit ? 'update' : 'create'} developer.`;
+    setError(msg);
+    toast.error(msg);
+  } finally {
+    setSaving(false);
   }
+};
+
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 p-4 border rounded bg-white">

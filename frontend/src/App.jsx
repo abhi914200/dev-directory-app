@@ -1,43 +1,36 @@
-// src/App.jsx
-import { useState } from "react";
-import DeveloperForm from "./components/DeveloperForm";
-import DeveloperList from "./components/DeveloperList";
-import Toast from "./components/Toast";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
+import DeveloperListPage from './pages/DeveloperListPage';
+import DeveloperProfilePage from './pages/DeveloperProfilePage';
+import DeveloperFormPage from './pages/DeveloperFormPage'; // NEW
 
-export default function App() {
-  // change trigger to force DeveloperList reload after add
-  const [trigger, setTrigger] = useState(Date.now());
-  const [toast, setToast] = useState({ msg: "", type: "success" });
-
-  function showToast(msg, type = "success") {
-    setToast({ msg, type });
-  }
-
-  function onAdded() {
-    setTrigger(Date.now());
-  }
-
+function App() {
   return (
-    <div className=" min-h-screen bg-amber-200 p-6 ">
-      <div className="max-w-4xl mx-auto ">
-        <h1 className="text-2xl font-bold mb-4">Developer Directory</h1>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          {/* Public */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
 
-        <div className=" mb-5 grid gap-6  grid-cols-1">
-          <DeveloperForm onAdded={onAdded} showToast={showToast} />
-          
-        </div>
-        <div className="border rounded p-4 bg-slate-50">
-            <h2 className="font-semibold mb-2">Developers</h2>
-            <DeveloperList trigger={trigger} showToast={showToast} />
+          {/* Protected */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<DeveloperListPage />} />
+            <Route path="/developers" element={<DeveloperListPage />} />
+            <Route path="/developers/new" element={<DeveloperFormPage mode="create" />} />
+            <Route path="/developers/:id" element={<DeveloperProfilePage />} />
+            <Route path="/developers/:id/edit" element={<DeveloperFormPage mode="edit" />} />
+          </Route>
 
-          </div>
-      </div>
-
-      <Toast
-        message={toast.msg}
-        type={toast.type}
-        onClose={() => setToast({ msg: "", type: "success" })}
-      />
-    </div>
+          {/* Fallback */}
+          <Route path="*" element={<DeveloperListPage />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
+
+export default App;
